@@ -3,12 +3,8 @@
 <p align="center">
   <a href="https://github.com/tang-xiaolong/MapGridInUnity/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/vue.svg" alt="License"></a>
 </p>
-
 <h1 align="center">MapGridInUnity</h1>
 <p align="center"><b>一个通用的游戏地图解决方案</b></p>
-<h1 align="left">目录</h1>
-
-[TOC]
 
 ## 主要模块
 

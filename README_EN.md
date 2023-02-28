@@ -6,9 +6,6 @@ English | [简体中文](./README.md)
 
 <h1 align="center">MapGridInUnity</h1>
 <p align="center"><b>A universal game map solution</b></p>
-<h1 align="left">Catalogue</h1>
-
-[TOC]
 
 ## Main module
 
