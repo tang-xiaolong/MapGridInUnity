@@ -14,7 +14,7 @@
 
 ### 通用的地图模块
 
-​        该模块做到了将地图数据与地图显示完全抽离，模块中抽离了一系列地图相关的接口，比如`IMapGrid`，`IMapShow`, `INode`, `IPathNode`,`INodeEntity`等等，每个接口负责定义实现类应该要有什么功能。本模块借助接口来实现地图模块的通用性，模块中各个类只依赖接口内方法，类型则通过依赖注入的形式来设置。
+该模块做到了将地图数据与地图显示完全抽离，模块中抽离了一系列地图相关的接口，比如`IMapGrid`，`IMapShow`, `INode`, `IPathNode`,`INodeEntity`等等，每个接口负责定义实现类应该要有什么功能。本模块借助接口来实现地图模块的通用性，模块中各个类只依赖接口内方法，类型则通过依赖注入的形式来设置。
 
 * `IMapGrid`:  定义了地图数据类的常用的属性和必要的方法。
 
@@ -36,7 +36,7 @@
 
 ## Gif示例
 
-### 创建地图配置
+### 创建生成地图配置
 
 ![创建地图配置](https://github.com/tang-xiaolong/MapGridInUnity/blob/main/Screenshot/CreateGenerateConfig.gif?raw=true)
 
@@ -48,7 +48,7 @@
 
 
 
-### 地图是否需要偏移
+### 地图起点是否需要偏移
 
 ![地图是否需要偏移](https://github.com/tang-xiaolong/MapGridInUnity/blob/main/Screenshot/MapOffset.gif?raw=true)
 
@@ -68,7 +68,7 @@
 
 
 
-## 示例图：
+## 示例图
 
 ### 六边形地图高亮范围内的格子
 
