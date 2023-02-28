@@ -1,10 +1,14 @@
-# MapGridInUnity
+[English](./README_EN.md) | 简体中文
 
-这是一个通用的游戏地图解决方案，其主要包含了三部分内容：
+<p align="center">
+  <a href="https://github.com/tang-xiaolong/MapGridInUnity/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/vue.svg" alt="License"></a>
+</p>
 
-* 通用的最小堆最大堆。
-* 通用的网格地图(四方向和八方向)、六边形地图，以及地图节点范围高亮(圆环内的节点高亮、线段内的节点高亮以及扇形范围内节点高亮)。
-* 通用的A星寻路算法，经过最小堆优化的A星算法。
+<h1 align="center">MapGridInUnity</h1>
+<p align="center"><b>一个通用的游戏地图解决方案</b></p>
+<h1 align="left">目录</h1>
+
+[TOC]
 
 ## 主要模块
 

@@ -1,10 +1,14 @@
-# MapGridInUnity
+English | [简体中文](./README.md)
 
-This is a universal game map solution that has three main parts:
+<p align="center">
+  <a href="https://github.com/tang-xiaolong/MapGridInUnity/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/vue.svg" alt="License"></a>
+</p>
 
-* Universal minimum heap maximum heap.
-* Universal grid maps (four - and eight-directional), hexagonal maps, and map node range highlighting (node highlight within a ring, node highlight within a line segment, and node highlight within a sector range).
-* Universal A-star pathfinding algorithm, minimum heap optimized A-star algorithm.
+<h1 align="center">MapGridInUnity</h1>
+<p align="center"><b>A universal game map solution</b></p>
+<h1 align="left">Catalogue</h1>
+
+[TOC]
 
 ## Main module
 
