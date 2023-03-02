@@ -127,7 +127,7 @@ This module contains the A star pathfinding algorithm and optimized minimum heap
 
 ## Road map
 
-- [ ] Added structure class diagram for map module.
+- [x] Added structure class diagram for map module.
 - [ ] Take apart the entire module via blog or video.
 - [ ] Added pathfinding algorithm test scenario.
 - [ ] Added a TileMap example.
