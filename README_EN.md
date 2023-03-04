@@ -125,6 +125,10 @@ This module contains the A star pathfinding algorithm and optimized minimum heap
 
 
 
+## Class diagram
+
+![MapGridInUnity类图.drawio](https://img-bucket11.oss-cn-hangzhou.aliyuncs.com/BlogImage/202303041648233.svg)
+
 ## Road map
 
 - [x] Added structure class diagram for map module.
