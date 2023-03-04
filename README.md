@@ -6,6 +6,10 @@
 <h1 align="center">MapGridInUnity</h1>
 <p align="center"><b>一个通用的游戏地图解决方案</b></p>
 
+## 设计思路解析
+
+[通用游戏地图解决方案设计解析](https://mp.weixin.qq.com/s/JSChyaS46d0EYnhwAW0ddA)
+
 ## 主要模块
 
 ### 最小堆最大堆模块
@@ -131,7 +135,7 @@
 ## 路线图
 
 - [x] 增加地图模块的结构类图。
-- [ ] 图文或者视频对整个模块做拆解。
+- [x] 图文或者视频对整个模块做拆解。
 - [ ] 增加寻路算法测试场景。
 - [ ] 增加TileMap示例。
 - [ ] 基于Unity UI Elements的地图编辑器。

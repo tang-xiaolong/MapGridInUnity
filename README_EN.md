@@ -7,6 +7,10 @@ English | [简体中文](./README.md)
 <h1 align="center">MapGridInUnity</h1>
 <p align="center"><b>A universal game map solution</b></p>
 
+## Analysis of design ideas
+
+[Design and analysis of universal game map solution](https://mp.weixin.qq.com/s/JSChyaS46d0EYnhwAW0ddA)
+
 ## Main module
 
 ### Minimum heap maximum heap module
@@ -132,7 +136,7 @@ This module contains the A star pathfinding algorithm and optimized minimum heap
 ## Road map
 
 - [x] Added structure class diagram for map module.
-- [ ] Take apart the entire module via blog or video.
+- [x] Take apart the entire module via blog or video.
 - [ ] Added pathfinding algorithm test scenario.
 - [ ] Added a TileMap example.
 - [ ] Map editor based on Unity UI Elements.
