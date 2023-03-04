@@ -14,24 +14,6 @@ public class TestHeap : MonoBehaviour
         for (int i = 0; i < count; i++)
             heap.Insert(Random.Range(1, 100));
         Debug.Log(heap);
-        Debug.Log(heap.IsMinHeap());
-        
-    }
-    [ContextMenu("CreateMinHeapBySequence")]
-    public void CreateMinHeapBySequence()
-    {
-        var numbers = nunSequence.Split(' ');
-        count = numbers.Length;
-        heap = new MinHeap<int>(count);
-        int[] intNums = new int[count];
-        for (int i = 0; i < count; i++)
-        {
-            intNums[i] = int.Parse(numbers[i]);
-            // heap.Insert(int.Parse(numbers[i]));
-        }
-        heap.Create(intNums);
-        Debug.Log(heap);
-        Debug.Log(heap.IsMinHeap());
         
     }
     
@@ -50,7 +32,6 @@ public class TestHeap : MonoBehaviour
         if (heap != null)
         {
             heap.Insert(insertItem);
-            Debug.Log($"{heap}  Is MinHeap:{heap.IsMinHeap()}");
         }
     }
     [ContextMenu("DeleteValue")]
@@ -59,7 +40,6 @@ public class TestHeap : MonoBehaviour
         if (heap != null && heap.Count > 0)
         {
             Debug.Log($"Delete:{heap.DeleteHead()}");
-            Debug.Log($"{heap}  Is MinHeap:{heap.IsMinHeap()}");
         }
     }
     [ContextMenu("PrintHeap")]
