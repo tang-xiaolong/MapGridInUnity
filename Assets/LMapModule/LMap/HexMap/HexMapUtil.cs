@@ -58,9 +58,9 @@ namespace LMap
                 {
                     iX = Ac2Cc(iY, iZ);
                 }
-                else if (dY > dZ)
+                else if (dZ > dY)
                 {
-                    iY = Ac2Cc(iX, iY);
+                    iZ = Ac2Cc(iX, iY);
                 }
             }
 
