@@ -13,7 +13,7 @@ namespace LPathSearch
         {
             _width = mapGrid.GetWidth();
             Vector3 halfGridSize = new Vector3(mapGrid.GetMapNodeSize() * .5f, mapGrid.GetMapNodeSize() * .5f);
-            MinHeap<IPathNode> openMinHeap = new MinHeap<IPathNode>((_width + 1) * 2);
+            Heap<IPathNode> openMinHeap = new Heap<IPathNode>((_width + 1) * 2, HeapType.MinHeap);
             Dictionary<int, IPathNode> closeList = new Dictionary<int, IPathNode>((_width + 1) * 2);
             Dictionary<IPathNode, byte> openFlag = new Dictionary<IPathNode, byte>((_width + 1) * 2);
             List<IPathNode> path = new List<IPathNode>();

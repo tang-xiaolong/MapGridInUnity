@@ -10,7 +10,7 @@ public class TestHeap : MonoBehaviour
     [ContextMenu("CreateMinHeap")]
     public void CreateMinHeap()
     {
-        heap = new MinHeap<int>(count);
+        heap = new Heap<int>(count, HeapType.MinHeap);
         for (int i = 0; i < count; i++)
             heap.Insert(Random.Range(1, 100));
         Debug.Log(heap);
@@ -20,7 +20,7 @@ public class TestHeap : MonoBehaviour
     [ContextMenu("CreateMaxHeap")]
     public void CreateMaxHeap()
     {
-        heap = new MaxHeap<int>(count);
+        heap = new Heap<int>(count, HeapType.MaxHeap);
         for (int i = 0; i < count; i++)
             heap.Insert(Random.Range(1, 100));
         Debug.Log(heap);

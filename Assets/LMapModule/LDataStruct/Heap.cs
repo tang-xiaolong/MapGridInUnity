@@ -4,16 +4,38 @@ using System.Text;
 
 namespace LDataStruct
 {
-    public abstract class Heap<T>:IDisposable where T :IComparable
+    public enum HeapType
+    {
+        MinHeap,
+        MaxHeap
+    }
+
+    public class Heap<T> : IDisposable where T : IComparable
     {
         protected List<T> itemArray;
         private int capacity;
         protected int count;
         public int Count => count;
-    
-        public Heap(int capacity)
+        private readonly Func<T, T, bool> _comparerFun;
+
+        public Heap(int capacity, HeapType heapType)
         {
+            if (heapType == HeapType.MinHeap)
+                _comparerFun = MinComparerFunc;
+            else
+                _comparerFun = MaxComparerFunc;
+
             Init(capacity);
+        }
+
+        private bool MinComparerFunc(T t1, T t2)
+        {
+            return t1.CompareTo(t2) > 0;
+        }
+
+        private bool MaxComparerFunc(T t1, T t2)
+        {
+            return !MinComparerFunc(t1, t2);
         }
 
         void Init(int initCapacity)
@@ -22,9 +44,10 @@ namespace LDataStruct
             {
                 throw new IndexOutOfRangeException();
             }
+
             capacity = initCapacity;
             //从下标为1开始存放数据
-            itemArray = new List<T>(initCapacity + 1) {default};
+            itemArray = new List<T>(initCapacity + 1) { default };
             count = 0;
         }
 
@@ -57,7 +80,7 @@ namespace LDataStruct
 
             return index;
         }
-    
+
         /// <summary>
         /// 堆是否已经满
         /// </summary>
@@ -79,9 +102,64 @@ namespace LDataStruct
             count += 1;
             Pop(count);
         }
-        protected abstract void Pop(int index);
-        protected abstract void Sink(int index);
-        public abstract void Adjust(T item);
+
+        private void Pop(int index)
+        {
+            T targetItem = itemArray[index];
+            while (index > 1 && _comparerFun(itemArray[index / 2], targetItem))
+            {
+                var parentIndex = index / 2;
+                itemArray[index] = itemArray[parentIndex];
+                index = parentIndex;
+            }
+
+            itemArray[index] = targetItem;
+        }
+
+        protected void Sink(int index)
+        {
+            T targetItem = itemArray[index];
+            int parent = index;
+            //节点i的左儿子下标为2*i，右儿子下标为2*i+1
+            while (parent * 2 <= count)
+            {
+                var child = parent * 2;
+                //Min:让Child指向左右节点中较小的那个
+                //Max:让Child指向左右节点中较大的那个
+                if (child != count && _comparerFun(itemArray[child], itemArray[child + 1]))
+                    child++;
+                if (_comparerFun(itemArray[child], targetItem))
+                    break;
+                itemArray[parent] = itemArray[child];
+                //将temp元素移动到下一层
+                //child移动到parent位置了，所以接下来需要从其他地方移动数据到child位置上。这里直接循环即可
+                parent = child;
+            }
+
+            itemArray[parent] = targetItem;
+        }
+
+        public void Adjust(T item)
+        {
+            //如果Item有父节点
+            int index = GetItemIndex(item);
+            //如果不包含这个节点
+            if (index == -1)
+                return;
+            //Min: 如果item变化后比父节点大  old: root < item < child   now: root < item  但是child和item关系不确定
+            //Max: //如果item变化后比父节点小  old: root > item > child   now: root > item  但是child和item关系不确定
+            if (_comparerFun(item, itemArray[index / 2]))
+            {
+                //调整item与子节点的
+                Sink(index);
+            }
+            else
+            {
+                //oldMin: root < item < child  now:item < root < child  root已经没有资格再做root了，需要往上冒
+                //oldMax: root > item > child  now:item > root > child  root已经没有资格再做root了，需要往上冒
+                Pop(index);
+            }
+        }
 
         public T DeleteHead()
         {
@@ -115,6 +193,7 @@ namespace LDataStruct
             {
                 result.Append(itemArray[i] + " ");
             }
+
             return result.ToString();
         }
 

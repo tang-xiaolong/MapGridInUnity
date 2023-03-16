@@ -25,7 +25,7 @@ namespace LPathSearch
             _width = mapGrid.GetWidth();
             _sessionId += 1;
             Vector3 halfGridSize = new Vector3(mapGrid.GetMapNodeSize() * .5f, mapGrid.GetMapNodeSize() * .5f);
-            MinHeap<IPathNode> openMinHeap = new MinHeap<IPathNode>((_width + 1) * 2);
+            Heap<IPathNode> openMinHeap = new Heap<IPathNode>((_width + 1) * 2, HeapType.MinHeap);
             List<IPathNode> path = new List<IPathNode>();
             IPathNode preNode = null;
             bool havePath = false;
