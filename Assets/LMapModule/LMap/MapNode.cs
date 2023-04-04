@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace LMap
 {
@@ -6,6 +7,7 @@ namespace LMap
     {
         private readonly NodeType nodeType;
         private IPathNode _parent;
+        private bool _disposed;
 
         public override string ToString()
         {
@@ -20,6 +22,28 @@ namespace LMap
 
         public void Dispose()
         {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        
+        protected virtual void Dispose(bool disposing)
+        {
+
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    _parent = null;
+                }
+
+                _disposed = true;
+            }
+            
+        }
+        
+        ~MapNode()
+        {
+            Dispose(false);
         }
 
         public int CompareTo(MapNode other)

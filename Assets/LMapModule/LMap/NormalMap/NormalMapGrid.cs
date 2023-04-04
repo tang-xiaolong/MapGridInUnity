@@ -15,6 +15,7 @@ namespace LMap
         private float _gridSize = 1f;
         private IMapShow _mapShow = null;
         protected bool _startNodeHasOffset = false;
+        private bool _disposed;
 
         public NormalMapGrid(Func<INode> createNodeFunc, int width, int height, float gridSize, IDir nodeDir, MapCoordinate mapCoordinate, bool startNodeHasOffset = false)
         {
@@ -291,22 +292,42 @@ namespace LMap
 
         public void Dispose()
         {
-            if (_gridData != null)
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+                return;
+            if (disposing)
             {
-                for (int i = 0; i < _width; i++)
+                if (_gridData != null)
                 {
-                    for (int j = 0; j < _height; j++)
+                    for (int i = 0; i < _width; i++)
                     {
-                        var node = _gridData[i, j];
-                        if (node != null)
+                        for (int j = 0; j < _height; j++)
                         {
-                            node.Dispose();
+                            var node = _gridData[i, j];
+                            if (node != null)
+                            {
+                                node.Dispose();
+                            }
                         }
                     }
+
+                    _gridData = null;
                 }
+
+                BindMapGridShow(null);
             }
 
-            BindMapGridShow(null);
+            _disposed = true;
+        }
+
+        ~NormalMapGrid()
+        {
+            Dispose(false);
         }
     }
 }

@@ -17,6 +17,7 @@ namespace LMap
         protected Func<int, int, bool> _shapeFilterFunc;
         protected IMapShow _mapShow = null;
         protected HexDir _hexDir = new HexDir();
+        private bool _disposed;
 
         public int GetWidth()
         {
@@ -243,22 +244,41 @@ namespace LMap
 
         public void Dispose()
         {
-            if (_gridData != null)
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        
+        protected virtual void Dispose(bool disposing)
+        {
+            
+            if(_disposed)
+                return;
+            if (disposing)
             {
-                for (int i = 0; i < _width; i++)
+                if (_gridData != null)
                 {
-                    for (int j = 0; j < _height; j++)
+                    for (int i = 0; i < _width; i++)
                     {
-                        var node = _gridData[j, i];
-                        if (node != null)
+                        for (int j = 0; j < _height; j++)
                         {
-                            node.Dispose();
+                            var node = _gridData[j, i];
+                            if (node != null)
+                            {
+                                node.Dispose();
+                            }
                         }
                     }
                 }
-            }
 
-            BindMapGridShow(null);
+                BindMapGridShow(null);
+            }
+            
+            _disposed = true;
+        }
+
+        ~HexGrid()
+        {
+            Dispose(false);
         }
     }
 }

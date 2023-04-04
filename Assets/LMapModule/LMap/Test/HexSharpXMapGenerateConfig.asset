@@ -15,8 +15,9 @@ MonoBehaviour:
   MapType: 1
   MapCoordinate: 1
   HexMapType: 0
-  NeedOffset: 0
-  Width: 20
-  Height: 23
+  NormalGridDir: 1
+  NeedOffset: 1
+  Width: 100
+  Height: 100
   CeilSize: 1
   node: {fileID: 1897273902463867127, guid: 188bb0e2a82e4d94f929d6a877de4459, type: 3}

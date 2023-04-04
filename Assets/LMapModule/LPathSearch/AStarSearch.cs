@@ -1,15 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using LMap;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace LPathSearch
 {
-    public class AStarSearch : IPathSearch
+    public class AStarSearch : IPathSearch, IDisposable
     {
         private int _width;
         private List<IPathNode> _openList = new List<IPathNode>(200);
         private Dictionary<int, IPathNode> _closeList = new Dictionary<int, IPathNode>(200);
         private Dictionary<IPathNode, byte> _openFlag = new Dictionary<IPathNode, byte>(200);
+        private bool _disposed;
 
         public List<IPathNode> SearchPath(IMapGrid mapGrid, Vector2Int startPoint, Vector2Int endPoint)
         {
@@ -130,6 +133,34 @@ namespace LPathSearch
         private int GetKey(int x, int y)
         {
             return x * _width + y;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    _openList.Clear();
+                    _openList = null;
+                    _closeList.Clear();
+                    _closeList = null;
+                    _openFlag.Clear();
+                    _openFlag = null;
+                }
+                _disposed = true;
+            }
+        }
+        
+        //析构函数
+        ~AStarSearch()
+        {
+            Dispose(false);
         }
     }
 }

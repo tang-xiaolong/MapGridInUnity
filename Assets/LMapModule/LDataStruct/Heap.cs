@@ -12,6 +12,7 @@ namespace LDataStruct
 
     public class Heap<T> : IDisposable where T : IComparable
     {
+        private bool _disposed = false;
         protected List<T> itemArray;
         private int capacity;
         protected int count;
@@ -211,8 +212,37 @@ namespace LDataStruct
 
         public void Dispose()
         {
-            Clear();
-            itemArray = null;
+            // 调用Dispose(true)释放托管和非托管资源
+            Dispose(true);
+            // 阻止终结器运行
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            // 如果已经释放，直接返回
+            if (_disposed)
+                return;
+            // 如果disposing为true，表示由Dispose方法调用，释放托管资源
+            if (disposing)
+            {
+                // 释放托管资源
+                Clear();
+                // 将托管资源设为null
+                itemArray = null;
+            }
+
+            // 释放非托管资源
+
+            // 将disposed设为true，表示已经释放
+            _disposed = true;
+        }
+        
+        // 定义终结器，以防止忘记调用Dispose方法
+        ~Heap()
+        {
+            // 调用Dispose(false)只释放非托管资源
+            Dispose(false);
         }
     }
 }

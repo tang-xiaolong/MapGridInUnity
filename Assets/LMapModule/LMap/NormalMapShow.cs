@@ -11,6 +11,7 @@ namespace LMap
         private Transform _transform;
         private IMapGrid _mapGrid;
         private List<INode> _highLightNodes = new List<INode>();
+        private bool _disposed;
 
         private Transform MyTransform
         {
@@ -198,7 +199,31 @@ namespace LMap
 
         public void Dispose()
         {
-            DisposeNode();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    DisposeNode();
+                    _mapNodes = null;
+                    _node = null;
+                    _transform = null;
+                    _mapGrid = null;
+                    _highLightNodes = null;
+                }
+
+                _disposed = true;
+            }
+        }
+        
+        ~NormalMapShow()
+        {
+            Dispose(false);
         }
     }
 }
