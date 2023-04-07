@@ -7,7 +7,7 @@ namespace LMap
     public class NormalMapShow : MonoBehaviour, IMapShow
     {
         private GameObject _node;
-        private Dictionary<INode, INodeEntity> _mapNodes = new Dictionary<INode, INodeEntity>();
+        private Dictionary<INode, INodeEntity> _mapNodes;
         private Transform _transform;
         private IMapGrid _mapGrid;
         private List<INode> _highLightNodes = new List<INode>();
@@ -31,13 +31,18 @@ namespace LMap
         public void Show(IMapGrid mapGrid)
         {
             DisposeNode();
+            _disposed = false;
             _mapGrid = mapGrid;
             if (mapGrid != null)
             {
+                int width = _mapGrid.GetWidth();
+                int height = _mapGrid.GetHeight();
+                if (_mapNodes == null)
+                    _mapNodes = new Dictionary<INode, INodeEntity>(width * height);
                 MapCoordinate mapCoordinate = mapGrid.GetMapCoordinate();
-                for (int line = 0; line < mapGrid.GetHeight(); line++)
+                for (int line = 0; line < height; line++)
                 {
-                    for (int row = 0; row < mapGrid.GetWidth(); row++)
+                    for (int row = 0; row < width; row++)
                     {
                         var newNode = Instantiate(_node, MyTransform);
                         newNode.name += $"{line}_{row}";
@@ -79,17 +84,20 @@ namespace LMap
 
         private void DisposeNode()
         {
-            if (_mapNodes.Count > 0)
+            if (_mapNodes != null)
             {
-                foreach (KeyValuePair<INode, INodeEntity> keyValuePair in _mapNodes)
+                if (_mapNodes.Count > 0)
                 {
-                    if (keyValuePair.Value != null)
+                    foreach (KeyValuePair<INode, INodeEntity> keyValuePair in _mapNodes)
                     {
-                        keyValuePair.Value.Dispose();   
+                        if (keyValuePair.Value != null)
+                        {
+                            keyValuePair.Value.Dispose();   
+                        }
                     }
-                }
 
-                _mapNodes.Clear();
+                    _mapNodes.Clear();
+                }
             }
         }
 
