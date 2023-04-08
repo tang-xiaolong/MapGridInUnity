@@ -29,6 +29,20 @@ namespace LDataStruct
             Init(capacity);
         }
 
+        public bool CheckHeapValid()
+        {
+            if (IsEmpty() || Count == 1) // 如果堆为空或仅有一个元素，则认为堆满足最大堆或最小堆的条件
+                return true;
+
+            for (int i = 2; i <= Count; i++)
+            {
+                if (_comparerFun(itemArray[i / 2], itemArray[i]))
+                    return false;
+            }
+
+            return true;
+        }
+
         private bool MinComparerFunc(T t1, T t2)
         {
             return t1.CompareTo(t2) > 0;
@@ -36,7 +50,7 @@ namespace LDataStruct
 
         private bool MaxComparerFunc(T t1, T t2)
         {
-            return !MinComparerFunc(t1, t2);
+            return t1.CompareTo(t2) < 0;
         }
 
         void Init(int initCapacity)
@@ -162,6 +176,50 @@ namespace LDataStruct
             }
         }
 
+        public bool Delete(T item)
+        {
+            if (IsEmpty())
+                throw new InvalidOperationException("Heap is empty");
+
+            int index = GetItemIndex(item);
+            if (index == -1)
+                return false;
+
+            // 如果只有一个元素，直接删除
+            if (count == 1)
+            {
+                itemArray.RemoveAt(1);
+                count--;
+                return true;
+            }
+            
+            //删除的就是最后一个元素
+            if (index == count)
+            {
+                itemArray.RemoveAt(count);
+                count--;
+                return true;
+            }
+            // 将要删除的元素和堆底元素交换
+            T lastItem = itemArray[count];
+            itemArray[count] = itemArray[index];
+            itemArray[index] = lastItem;
+            itemArray.RemoveAt(count);
+            count--;
+
+            // 根据堆类型进行不同的操作
+            if (_comparerFun(lastItem, item))
+            {
+                Sink(index); // 最小堆下沉
+            }
+            else
+            {
+                Pop(index); // 最大堆上浮
+            }
+
+            return true;
+        }
+
         public T DeleteHead()
         {
             if (IsEmpty())
@@ -186,16 +244,47 @@ namespace LDataStruct
             return itemArray[1];
         }
 
-
-        public override string ToString()
+        public string GetString(string splitChar = "  ")
         {
-            StringBuilder result = new StringBuilder();
-            for (int i = 1; i < count + 1; i++)
+            if (itemArray == null || itemArray.Count <= 1)
             {
-                result.Append(itemArray[i] + " ");
+                return string.Empty;
+            }
+
+            StringBuilder result = new StringBuilder();
+
+            int h = (int)Math.Floor(Math.Log(itemArray.Count, 2)) + 1; // 最小堆的高度
+            int index = 1; // 当前节点在数组中的下标
+            int maxIndexInCurLevel = 1; // 当前层级最大节点在数组中的下标
+
+            for (int i = 0; i < h; i++)
+            {
+                // 遍历每一层
+                // 输出左边的空格
+                for (int j = 0; j < (1 << (h - i)) - 2; j++)
+                    result.Append(splitChar);
+
+                for (int j = index; j <= Math.Min(itemArray.Count - 1, maxIndexInCurLevel); j++)
+                {
+                    // 遍历当前层级的所有节点
+                    result.Append(itemArray[j]);
+                    //右边的空格
+                    for (int k = 0; k < (1 << (h - i + 1)) - 2; k++)
+                        result.Append(splitChar);
+                }
+
+                result.Append("\n"); // 换行
+                index = maxIndexInCurLevel + 1;
+                maxIndexInCurLevel = (maxIndexInCurLevel + 1) * 2 - 1;
             }
 
             return result.ToString();
+        }
+
+
+        public override string ToString()
+        {
+            return GetString();
         }
 
         public List<T>.Enumerator GetHeapEnumerator()
@@ -237,7 +326,7 @@ namespace LDataStruct
             // 将disposed设为true，表示已经释放
             _disposed = true;
         }
-        
+
         // 定义终结器，以防止忘记调用Dispose方法
         ~Heap()
         {
